@@ -4,35 +4,29 @@ import domain.Move;
 import domain.Result;
 import domain.Rules;
 
+import static domain.Move.*;
+
 public class RockPaperScissors implements Rules {
     @Override
     public Result decide(Move mine, Move theirs) {
+        if(mine.equals(theirs)){
+            return Result.DRAW;
+        }
         switch (mine) {
             case ROCK:
-                switch (theirs) {
-                    case SCISSORS:
-                        return Result.WIN;
-                    case PAPER:
-                        return Result.LOSE;
-                }
-
+                return check(theirs.equals(SCISSORS));
             case PAPER:
-                switch (theirs) {
-                    case ROCK:
-                        return Result.WIN;
-                    case SCISSORS:
-                        return Result.LOSE;
-                }
-
+                return check(theirs.equals(ROCK));
             case SCISSORS:
-                switch (theirs) {
-                    case PAPER:
-                        return Result.WIN;
-                    case ROCK:
-                        return Result.LOSE;
-                }
+                return check(theirs.equals(PAPER));
         }
-
-        return Result.DRAW;
+        return null;
+    }
+    private Result check(boolean win){
+        if(win){
+            return Result.WIN;
+        } else{
+            return Result.LOSE;
+        }
     }
 }
